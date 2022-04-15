@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package protobuf;
+
+option go_package = "./protocol";
+
+message Transaction  {
+  string ID = 1;
+  float PriceOpen = 2;
+  bool IsBay = 3;
+  string Symbol = 4;
+  float PriceClose = 5;
+}
+
+service PositionService{
+  rpc OpenPositionAsk(OpenRequest) returns(OpenResponse){};
+  rpc OpenPositionBid(OpenRequest) returns(OpenResponse){};
+
+  rpc ClosePositionAsk(CloseRequest) returns(CloseResponse){};
+  rpc ClosePositionBid(CloseRequest) returns(CloseResponse){};
+}
+message OpenRequest {
+  Transaction trans = 1;
+}
+message OpenResponse{
+  string  ID = 1;
+}
+message CloseRequest{
+  string ID = 1;
+  string Symbol = 3;
+  float PriceClose = 2;
+}
+message CloseResponse{
+  string Result = 1;
+  string Error = 2;
+}
