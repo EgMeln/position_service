@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-minikube-position-service
+  labels:
+    app: dev-minikube-position-service
+spec:
+  selector:
+    matchLabels:
+      app: dev-minikube-position-service
+  template:
+    metadata:
+      labels:
+        app: dev-minikube-position-service
+    spec:
+      containers:
+        - name: dev-minikube-position-service
+          image: "minikube-position-service:latest"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PRICE_PORT
+              value: minikube-price-service:8089
+            - name: POSTGRES_PASSWORD
+              value: "54236305"
+#              valueFrom:
+#                secretKeyRef:
+#                  key: password
+#                  name: position-postgres-secret-config
+            - name: POSTGRES_PORT
+              value: '5432'
+            - name: POSTGRES_USER
+              value: egormelnikov
+            - name: POSTGRES_DB
+              value: egormelnikov
+            - name: POSTGRES_HOST
+              value: dev-position-postgres-database

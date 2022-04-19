@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-position-postgres-database
+spec:
+  selector:
+    app: dev-position-postgres-database
+  type: LoadBalancer
+  ports:
+    - port: 5432
+      targetPort: 5432

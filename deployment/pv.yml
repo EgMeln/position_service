@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dev-position-postgres-pv
+spec:
+  capacity:
+    storage: 5Gi
+  hostPath:
+    path: /position-data
+    type: ''
+  storageClassName: "manual"
+  accessModes: ["ReadWriteOnce"]
+  claimRef:
+    name: dev-position-postgres-pvc
+    namespace: default

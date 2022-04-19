@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-position-postgres-database
+spec:
+  selector:
+    matchLabels:
+      app: dev-position-postgres-database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev-position-postgres-database
+    spec:
+      containers:
+        - name: dev-position-postgres-database
+          image: postgres
+          volumeMounts:
+            - name: dev-position-postgres-pvc
+              mountPath: /data
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dev-position-postgres-secret-config
+                  key: password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+            - name: POSTGRES_USER
+              value: egormelnikov
+            - name: POSTGRES_DB
+              value: egormelnikov
+      volumes:
+        - name: dev-position-postgres-pvc
+          persistentVolumeClaim:
+            claimName: dev-position-postgres-pvc
+
+
